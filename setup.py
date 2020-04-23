@@ -32,11 +32,12 @@ setup(
         "Programming Language :: Python :: 3.8",
     ],
     description="Some Project for testing the semantic similarity between two sentences.",
-    entry_points={
-        "console_scripts": [
-            "semtextsim=semtextsim.cli:main",
-        ],
-    },
+#     Reactivate on demand
+#     entry_points={
+#         "console_scripts": [
+#             "semtextsim=semtextsim.cli:main",
+#         ],
+#     },
     install_requires=requirements,
     license="MIT license",
     include_package_data=True,
