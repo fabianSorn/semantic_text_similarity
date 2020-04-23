@@ -4,43 +4,49 @@
 
 from setuptools import setup, find_packages
 
-requirements = [ ]
+requirements = ["tensorflow",
+                "tensorflow_hub",
+                "tensorflow_text>=2.0.0rc0"
+                "numpy"]
 
-setup_requirements = ['pytest-runner', ]
+requirements_examples = ["matplotlib",
+                         "seaborn"]
 
-test_requirements = ['pytest>=3', ]
+setup_requirements = ["pytest-runner", ]
+
+test_requirements = ["pytest>=3", ]
 
 setup(
     author="Fabian Sorn",
-    author_email='fabian.sorn@icloud.com',
-    python_requires='>=3.5',
+    author_email="fabian.sorn@icloud.com",
+    python_requires=">=3.5",
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Natural Language :: English',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
+        "Development Status :: 2 - Pre-Alpha",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Natural Language :: English",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
     description="Some Project for testing the semantic similarity between two sentences.",
     entry_points={
-        'console_scripts': [
-            'semtextsim=semtextsim.cli:main',
+        "console_scripts": [
+            "semtextsim=semtextsim.cli:main",
         ],
     },
     install_requires=requirements,
     license="MIT license",
     include_package_data=True,
-    keywords='semtextsim',
-    name='semtextsim',
-    packages=find_packages(include=['semtextsim', 'semtextsim.*']),
+    keywords="semtextsim",
+    name="semtextsim",
+    packages=find_packages(include=["semtextsim", "semtextsim.*"]),
     setup_requires=setup_requirements,
-    test_suite='tests',
+    test_suite="tests",
     tests_require=test_requirements,
-    url='https://github.com/fabianSorn/semtextsim',
-    version='0.1.0',
+    url="https://github.com/fabianSorn/semtextsim",
+    version="0.1.0",
     zip_safe=False,
 )

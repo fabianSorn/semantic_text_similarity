@@ -1,19 +1,20 @@
-"""Console script for semtextsim."""
+"""Interaction with the text comparer from the command line."""
 import argparse
 import sys
+
+from semtextsim.semtextsim import Comparer
 
 
 def main():
     """Console script for semtextsim."""
     parser = argparse.ArgumentParser()
-    parser.add_argument('_', nargs='*')
+    parser.add_argument("strings", nargs="*")
     args = parser.parse_args()
 
     print("Arguments: " + str(args._))
-    print("Replace this message by putting your code into "
-          "semtextsim.cli.main")
+    print(Comparer())
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())  # pragma: no cover
+    sys.exit(main())
