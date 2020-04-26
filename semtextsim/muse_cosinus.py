@@ -1,11 +1,13 @@
 from typing import List
+from itertools import combinations_with_replacement
+import re
+
 import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
 import tensorflow_text
-import re
-from itertools import combinations_with_replacement
-from .comparer_interface import Encoder, SimilarityEvaluator
+
+from .interface import Encoder, SimilarityEvaluator
 
 
 TF = "https://tfhub.dev/google"
@@ -20,10 +22,19 @@ class MuseEncoder(Encoder):
         Encoder implementation based on the tensorflow model for the multi-
         lingual universal sentence encoder.
         """
-        self._embed = hub.load(model)
+        self._model = hub.load(model)
 
-    def extract_features(self, text: str) -> np.ndarray:
-        return self._embed(text)
+    def _embed(self, text: str) -> float:
+        """Type Check + Embedding model call."""
+        if not isinstance(text, str):
+            raise TypeError("Only strings are supported for embedding.")
+        return self._model(text)
+
+    def extract_features(self, *text: str) -> List[float]:
+        """"""
+        if len(text) < 2:
+            raise ValueError("No text was passed so we have nothing to encode.")
+        return [self._embed(t) for t in text]
 
 
 class CosinusSimilarityEvaluator(SimilarityEvaluator):
