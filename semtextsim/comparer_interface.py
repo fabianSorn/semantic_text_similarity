@@ -32,6 +32,11 @@ class SimilarityEvaluator:
         pass
 
     @abstractmethod
+    def eval_pair(self, text_1: str, text_2: str) -> float:
+        """Evaluate the similarity between the two given texts."""
+        pass
+
+    @abstractmethod
     def eval(self, *texts: str) -> np.ndarray:
         """Evaluate how semantically similar the given text pieces are."""
         pass

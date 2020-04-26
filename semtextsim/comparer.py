@@ -4,6 +4,7 @@ import tensorflow as tf
 import tensorflow_hub as hub
 import tensorflow_text
 import re
+from itertools import combinations_with_replacement
 from .comparer_interface import Encoder, SimilarityEvaluator
 
 
@@ -27,7 +28,13 @@ class MuseEncoder(Encoder):
 
 class CosinusSimilarityEvaluator(SimilarityEvaluator):
 
-    def eval(self, v1: np.ndarray, v2: np.ndarray) -> float:
+    def eval(self, *texts: str) -> np.ndarray:
+        results = []
+        for t1 in texts:
+            results.append([self.eval_pair(t1, t2) for t2 in texts])
+        return results
+
+    def eval_pair(self, v1: np.ndarray, v2: np.ndarray) -> float:
         mag1 = np.linalg.norm(v1)
         mag2 = np.linalg.norm(v2)
         if (not mag1) or (not mag2):
