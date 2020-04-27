@@ -4,13 +4,13 @@
 
 from setuptools import setup, find_packages
 
-requirements = ["tensorflow",
-                "tensorflow_hub",
-                "tensorflow_text>=2.0.0rc0"
-                "numpy"]
-
-requirements_examples = ["matplotlib",
-                         "seaborn"]
+# Not pinning tensorflow package versions might lead to incompatibilities
+requirements = ["tensorflow==2.2.0rc3",
+                "tensorflow_text==2.2.0rc2",
+                "tensorflow_hub==0.8.0",
+                "numpy",
+                "matplotlib",
+                "seaborn"]
 
 setup_requirements = ["pytest-runner", ]
 

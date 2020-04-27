@@ -32,7 +32,29 @@ Options for non statistical embeddings using neural networks:
 
 ## Project Introduction
 
-TODO
+### Installation + Usage
+
+The project can be simply be installed via pip. For example in a virtual
+environment:
+```python
+# Create some envrironment to install it to
+python3 -m pip install virtualenv
+python3 -m venv .venv
+source .venv/bin/activate
+# Now we can install it
+pip install -e .
+```
+
+**Attention:**
+Make shure you pip version is up to date, since Tensorflow 2 
+packages require `pip version > 19.0`, especially if you are using `virtualenv`.
+To test out the implementation, it can run on using the CLI:
+
+```python
+# -p -> Visualize the results in a heatmap
+# -f -> Text file with new-line separated sentences
+semtextsim -p -f examples/some_sentences.txt
+```
 
 ## References and Further Reading
 
