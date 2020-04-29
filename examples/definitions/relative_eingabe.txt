@@ -1,0 +1,9 @@
+Bei der relativen Eingabe wird die Differenz zwischen aktueller und letzter
+Eingabe gemessen.
+Die relative Eingabe misst den Abstand zwischen der letzten
+und der aktuellen Eingabeposition.
+Die relative Eingabe beschreibt wie weit sich die Eingabe von der letzten
+Position bewegt hat.
+Die relative Eingabe beschreibt die den Abstand zu einem Mittelpunkt.
+Die relative Eingabe beschreibt die Eingabe bei der man das Display nicht
+berührt.

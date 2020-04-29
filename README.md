@@ -2,7 +2,31 @@
 
 A tool for comparing the semantic similarity of two texts from the command line.
 
-## Introduction Semantic Text Similarity
+## Installation and Usage
+
+The project can be simply be installed via pip. For example in a virtual
+environment:
+```python
+# Create some envrironment to install it to
+python3 -m pip install virtualenv
+python3 -m venv .venv
+source .venv/bin/activate
+# Now we can install it
+pip install -e .
+```
+
+**Attention:**
+Make shure you pip version is up to date, since Tensorflow 2 
+packages require `pip version > 19.0`, especially if you are using `virtualenv`.
+To test out the implementation, it can run on using the CLI:
+
+```python
+# -p -> Visualize the results in a heatmap
+# -f -> Text file with new-line separated sentences
+semtextsim -p -f examples/some_sentences.txt
+```
+
+## Introduction STS and the project
 
 Comparing different text bodies for their semantic similarity is a common, but
 in no way trivial task to do. While lexical similarity compares, how similar two
@@ -30,31 +54,9 @@ Options for non statistical embeddings using neural networks:
       would also not have the required amount of annotated data....), see
       [GitHub issue](https://github.com/tensorflow/hub/issues/155)
 
-## Project Introduction
+As said, goal of this project is to explore the problem of evaluating the
+semantic similarity of different text bodies.
 
-### Installation + Usage
-
-The project can be simply be installed via pip. For example in a virtual
-environment:
-```python
-# Create some envrironment to install it to
-python3 -m pip install virtualenv
-python3 -m venv .venv
-source .venv/bin/activate
-# Now we can install it
-pip install -e .
-```
-
-**Attention:**
-Make shure you pip version is up to date, since Tensorflow 2 
-packages require `pip version > 19.0`, especially if you are using `virtualenv`.
-To test out the implementation, it can run on using the CLI:
-
-```python
-# -p -> Visualize the results in a heatmap
-# -f -> Text file with new-line separated sentences
-semtextsim -p -f examples/some_sentences.txt
-```
 
 ## References and Further Reading
 
