@@ -1,0 +1,9 @@
+{
+  "question": "Bei der isotonischen Eingabe wird",
+  "reference": "die Abweichung vom einem Ausgangspunkt / Mittelpunkt gemessen",
+  "answers": [
+    "gemessen, wie weit sich die Eingabe von einem gemeinsamen Mittelpunkt bewegt hat.",
+    "die Bewegung durch die Distanz zu einem Mittelpunkt gemessen.",
+    "wird Druck / Kraft gemessen ohne tatsächliche Bewegung"
+  ]
+}
