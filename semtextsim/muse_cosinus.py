@@ -36,8 +36,6 @@ class MuseEncoder(Encoder):
 
     def extract_features(self, *text: str) -> List[float]:
         """"""
-        if len(text) < 2:
-            raise ValueError("No text was passed so we have nothing to encode.")
         return [self._embed(t) for t in text]
 
 

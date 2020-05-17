@@ -10,7 +10,8 @@ requirements = ["tensorflow==2.2.0",
                 "tensorflow_hub==0.8.0",
                 "numpy",
                 "matplotlib",
-                "seaborn"]
+                "seaborn",
+                "dataclasses; python_version<='3.6'"]
 
 setup_requirements = ["pytest-runner", ]
 
@@ -34,7 +35,7 @@ setup(
     description="Some Project for testing the semantic similarity between two sentences.",
     entry_points={
         "console_scripts": [
-            "semtextsim=semtextsim.cli:main",
+            "sts=semtextsim.cli:main",
         ],
     },
     install_requires=requirements,

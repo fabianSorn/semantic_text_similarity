@@ -15,5 +15,5 @@ RUN tar -xzf model.tar.gz -C model
 RUN rm model.tar.gz
 
 # Now install the project and define it as the entry point
-RUN pip install -e .
-ENTRYPOINT ["semtextsim"]
+RUN pip install .
+ENTRYPOINT ["sts"]

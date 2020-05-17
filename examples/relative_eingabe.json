@@ -1,0 +1,10 @@
+{
+  "question": "Bei der relativen Eingabe wird",
+  "reference": "die Differenz zwischen aktueller und letzter Eingabe gemessen",
+  "answers": [
+    "der Abstand zwischen letzter und aktueller Eingabeposition verglichen.",
+    "betrachtet, wie weit sich die Eingabe von der letzten Position bewegt hat",
+    "der Abstand zu einem gemeinsamen Mittelpunkt gemessen",
+    "das Eingabemedium nicht direkt berührt."
+  ]
+}
