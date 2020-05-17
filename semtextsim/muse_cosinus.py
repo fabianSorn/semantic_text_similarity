@@ -1,6 +1,5 @@
 from typing import List
-from itertools import combinations_with_replacement
-import re
+import pathlib
 
 import numpy as np
 import tensorflow as tf
@@ -12,17 +11,22 @@ from .interface import Encoder, SimilarityEvaluator
 
 TF = "https://tfhub.dev/google"
 DEFAULT_MODEL_URL = f"{TF}/universal-sentence-encoder-multilingual-large/3"
+_CURRENT_DIR = pathlib.Path(__file__).parent.parent.absolute()
+DEFAULT_LOCAL_MODEL_LOC = str(_CURRENT_DIR / "model")
 
 
 class MuseEncoder(Encoder):
 
     def __init__(self,
-                 model: str = DEFAULT_MODEL_URL):
+                 model: str = DEFAULT_LOCAL_MODEL_LOC):
         """
         Encoder implementation based on the tensorflow model for the multi-
         lingual universal sentence encoder.
         """
-        self._model = hub.load(model)
+        try:
+            self._model = tf.keras.models.load_model(model)
+        except OSError:
+            self._model = hub.load(model)
 
     def _embed(self, text: str) -> float:
         """Type Check + Embedding model call."""

@@ -28,8 +28,8 @@ def _plot(sentences: List[str], similarity: np.ndarray):
     sns.set(font_scale=1.2)
     g = sns.heatmap(
         similarity,
-        xticklabels=[ '\n'.join(wrap(l, 30)) for l in sentences ],
-        yticklabels=[ '\n'.join(wrap(l, 30)) for l in sentences ],
+        xticklabels=['\n'.join(wrap(l, 30)) for l in sentences],
+        yticklabels=['\n'.join(wrap(l, 30)) for l in sentences],
         vmin=0,
         vmax=1,
         annot=True,
@@ -48,6 +48,7 @@ def _read_file(f: str) -> List[str]:
         sentences = [clean(f) for f in entire_text.split(".")]
         sentences = [f for f in sentences if len(f.strip()) > 0]
         return sentences
+
 
 def main():
     args = _args()

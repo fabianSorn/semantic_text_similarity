@@ -26,6 +26,19 @@ To test out the implementation, it can run on using the CLI:
 semtextsim -p -f examples/some_sentences.txt
 ```
 
+## For Windows
+
+This project relies on the python pacakge `tensorflow-text`, which is not available
+under windows. To try the project out anyway, a Dockerfile was included, which
+lets you run the cli in a Docker Container.
+
+To build the docker container and run it, type
+```shell script
+cd directory/with/the/Dockerfile
+docker build --tag semtextsim-cli .
+docker run semtextsim-cli "My first sentence." "My second sentence."
+``` 
+
 ## Introduction STS and the project
 
 Comparing different text bodies for their semantic similarity is a common, but

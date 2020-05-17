@@ -5,8 +5,8 @@
 from setuptools import setup, find_packages
 
 # Not pinning tensorflow package versions might lead to incompatibilities
-requirements = ["tensorflow==2.2.0rc3",
-                "tensorflow_text==2.2.0rc2",
+requirements = ["tensorflow==2.2.0",
+                "tensorflow_text==2.2.0",
                 "tensorflow_hub==0.8.0",
                 "numpy",
                 "matplotlib",
