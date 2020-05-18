@@ -46,6 +46,13 @@ def _args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def present(definition: Definition):
+    if WITH_PLOT:
+        _plot(definition)
+    else:
+        _print(definition)
+
+
 def _plot(definition: Definition):
     """Plot the similarity between each of the given sentences. If n sentences
     are passed, a n*n 2D array of similarity scores is expected."""
@@ -60,6 +67,12 @@ def _plot(definition: Definition):
     g.set_yticklabels(['\n'.join(wrap(l, 40)) for l in definition.answers], rotation=0)
     g.set_title(definition.question)
     plt.show()
+
+
+def _print(definition: Definition):
+    print(f'Reference Sentence: "{definition.question} {definition.reference}".')
+    for a, sim in zip(definition.answers, definition.answer_similarities):
+        print(f'-> "{a}" scored {sim}')
 
 
 def _read_file(f: str) -> Definition:
@@ -88,10 +101,7 @@ def main():
     answer_embeddings = encoder.extract_features(*definition.answers)
     similarities = [evaluator.eval_pair(reference_embedding, a) for a in answer_embeddings]
     definition.answer_similarities = similarities
-    if WITH_PLOT:
-        _plot(definition)
-    else:
-        print(definition.answer_similarities)
+    present(definition)
 
 
 if __name__ == "__main__":
