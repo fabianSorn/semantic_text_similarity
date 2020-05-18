@@ -1,4 +1,4 @@
-# SemTextSim
+# STS CLI
 
 A tool for comparing the semantic similarity of two texts from the command line.
 
@@ -20,10 +20,8 @@ Make shure you pip version is up to date, since Tensorflow 2
 packages require `pip version > 19.0`, especially if you are using `virtualenv`.
 To test out the implementation, it can run on using the CLI:
 
-```python
-# -p -> Visualize the results in a heatmap
-# -f -> Text file with new-line separated sentences
-semtextsim -p -f examples/some_sentences.txt
+```shell script
+sts "Das ist ein Test" "Das ist ein weiterer Test"
 ```
 
 ## For Windows
@@ -35,8 +33,8 @@ lets you run the cli in a Docker Container.
 To build the docker container and run it, type
 ```shell script
 cd directory/with/the/Dockerfile
-docker build --tag semtextsim-cli .
-docker run semtextsim-cli "My first sentence." "My second sentence."
+docker build --tag sts-cli .
+docker run sts-cli "My first sentence." "My second sentence."
 ``` 
 
 ## Introduction STS and the project
@@ -53,10 +51,20 @@ e.g. the cosinus similarity of two vectors, we can compare how similar their
 direction is. With good word embeddings, two texts with very similar meaning
 will produce vectors pointing to a very similar direction.
 
+Producing such vectors does not necessarily requires using neural networks.
+Bag of Words e.g. can produce such vectors in a statistical way by counting
+word occurrences. Machine learning approaches on the other hand proved to be
+more accurate.
+
 Options for non statistical embeddings using neural networks:
 - For Embedding of individual words: Google's Word2Vec
     - Support for Multiple Languages
     - Models trained in the German language (Wikipedia) already exist
+
+While W2V is good for embedding single words, we need an additional step for
+using it with entire sentences (e.g. calculate an average vector from all word
+vectors in the sentence).    
+
 - For Embedding of entire Sentences: Google's Universal Sentence Encoder
     - Support for Multiple Languages with multilingual models working with
       16 different languages
@@ -67,9 +75,36 @@ Options for non statistical embeddings using neural networks:
       would also not have the required amount of annotated data....), see
       [GitHub issue](https://github.com/tensorflow/hub/issues/155)
 
-As said, goal of this project is to explore the problem of evaluating the
-semantic similarity of different text bodies.
+## Use case specific specialities
 
+Since we are asking for a definition in our use case, a not so small part of the
+sentence will always be semantically very similar. A solution for that, which
+does not require additional tweeking of the USE model, is to divide the
+sentences in relevant and unrelevant parts. For example:
+
+**Question:** What does model XYZ discribe?
+
+**Answer:** Model Xyz discribes that this and that happens to this time.
+
+All given answers will have the part "Model Xyz describes ..." in common, which
+improves the similarity score even though we do not care about this particular
+part of the sentence. A problem is, that this stripped part can alway look a bit
+different in a given answer, so this part can not simply be removed. An easy
+solution to get rid of this answer is to alter the question. By providing this
+part and asking for a completion, the user will only write the part of the
+sentence we are actually interested in.
+
+**Question:** Model Xyz describes ...
+
+**Answer:** ... that this and that happens to this time.
+
+## A less generic approach
+
+It would probably be possible to create a less generic approach by finding a
+way to put more stress on parts of the sentence we care about more than others
+(e.g. apply some kind of weight-system to individual words). One problem with
+such an approach would be, that it would require preparation of all reference
+data, which does not seem realistic.
 
 ## References and Further Reading
 
