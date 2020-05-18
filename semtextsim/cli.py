@@ -6,8 +6,12 @@ from typing import List, Tuple, Optional
 from textwrap import wrap
 from dataclasses import dataclass
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+try:
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    WITH_PLOT = True
+except ImportError:
+    WITH_PLOT = False
 from semtextsim.muse_cosinus import MuseEncoder, CosinusSimilarityEvaluator
 
 
@@ -84,8 +88,10 @@ def main():
     answer_embeddings = encoder.extract_features(*definition.answers)
     similarities = [evaluator.eval_pair(reference_embedding, a) for a in answer_embeddings]
     definition.answer_similarities = similarities
-    # print(definition.answer_similarities)
-    _plot(definition)
+    if WITH_PLOT:
+        _plot(definition)
+    else:
+        print(definition.answer_similarities)
 
 
 if __name__ == "__main__":

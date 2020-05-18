@@ -9,9 +9,9 @@ requirements = ["tensorflow==2.2.0",
                 "tensorflow_text==2.2.0",
                 "tensorflow_hub==0.8.0",
                 "numpy",
-                "matplotlib",
-                "seaborn",
                 "dataclasses; python_version<='3.6'"]
+
+extras_require = {"plot": ["matplotlib", "seaborn"]}
 
 setup_requirements = ["pytest-runner", ]
 
@@ -39,14 +39,15 @@ setup(
         ],
     },
     install_requires=requirements,
+    extras_require=extras_require,
+    setup_requires=setup_requirements,
+    tests_require=test_requirements,
     license="MIT license",
     include_package_data=True,
     keywords="semtextsim",
     name="semtextsim",
     packages=find_packages(include=["semtextsim", "semtextsim.*"]),
-    setup_requires=setup_requirements,
     test_suite="tests",
-    tests_require=test_requirements,
     url="https://github.com/fabianSorn/semtextsim",
     version="0.1.0",
     zip_safe=False,

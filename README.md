@@ -6,13 +6,16 @@ A tool for comparing the semantic similarity of two texts from the command line.
 
 The project can be simply be installed via pip. For example in a virtual
 environment:
-```python
+```shell script
 # Create some envrironment to install it to
 python3 -m pip install virtualenv
 python3 -m venv .venv
 source .venv/bin/activate
-# Now we can install it
-pip install -e .
+# Make shure pip is up to date (for tensorflow >= 2)
+pip install --upgrade pip
+# If we install the plot dependencies, we will get a nicer representation of the
+# results from the cli
+pip install -e .[plot]
 ```
 
 **Attention:**
