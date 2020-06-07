@@ -11,7 +11,10 @@ requirements = ["tensorflow==2.2.0",
                 "numpy",
                 "dataclasses; python_version<='3.6'"]
 
-extras_require = {"plot": ["matplotlib", "seaborn"]}
+extras_require = {
+    "plot": ["matplotlib", "seaborn"],
+    "rasa": ["rasa", "rasa-sdk"],
+}
 
 setup_requirements = ["pytest-runner", ]
 

@@ -25,11 +25,12 @@ To test out the implementation, it can run on using the CLI:
 
 ```shell script
 sts "Das ist ein Test" "Das ist ein weiterer Test"
+sts -f examples/absolute_eingabe.json
 ```
 
-## For Windows
+### For Windows
 
-This project relies on the python pacakge `tensorflow-text`, which is not available
+This project relies on the python package `tensorflow-text`, which is not available
 under windows. To try the project out anyway, a Dockerfile was included, which
 lets you run the cli in a Docker Container.
 
@@ -39,6 +40,28 @@ cd directory/with/the/Dockerfile
 docker build --tag sts-cli .
 docker run sts-cli "My first sentence." "My second sentence."
 ``` 
+
+## Rasa Action Server
+
+The project provides an implementation of a 
+[custom rasa action](https://rasa.com/docs/rasa/core/actions/#custom-actions)
+which allows to use this project in a chatbot based on the
+[rasa framework](https://rasa.com).
+
+To install the requirements necessary to run the action server, run the
+following commands in your terminal.
+
+```shell script
+pip install -e .[rasa]
+rasa run actions --actions actions.actions
+```
+
+This will start a server providing a webservice on 
+[localhost:5055](https://localhost:5055)
+which can then be tested with e.g. 
+[this rasa chatbot](https://github.com/fabianSorn/rasa_playground).
+
+# Further, more general reading
 
 ## Introduction STS and the project
 
