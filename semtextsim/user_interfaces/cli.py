@@ -100,7 +100,7 @@ def main():
                                 answers=args.texts)
     reference_embedding = encoder.encode(definition.reference)
     answer_embeddings = encoder.encode(*definition.answers)
-    similarities = [comparer.eval_pair(reference_embedding, a) for a in answer_embeddings]
+    similarities = [comparer.compare(reference_embedding, a) for a in answer_embeddings]
     definition.answer_similarities = similarities
     present(definition)
 

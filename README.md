@@ -1,15 +1,17 @@
-# STS CLI
+# Semantic Text Similarity Server + CLI
 
-A tool for comparing the semantic similarity of two texts from the command line.
+A tool for comparing the semantic similarity of two texts which can be accessed
+from the command line or as a webservice.
 
 ## Installation and Usage
 
-The project can be simply be installed via pip. For example in a virtual
-environment:
+To install the project via pip in your environment, run the following commands
+in your terminal.
+
 ```shell script
 # Create some envrironment to install it to
-python3 -m pip install virtualenv
-python3 -m venv .venv
+python -m pip install virtualenv
+python -m venv .venv
 source .venv/bin/activate
 # Make shure pip is up to date (for tensorflow >= 2)
 pip install --upgrade pip
@@ -19,47 +21,67 @@ pip install -e .[plot]
 ```
 
 **Attention:**
-Make shure you pip version is up to date, since Tensorflow 2 
-packages require `pip version > 19.0`, especially if you are using `virtualenv`.
-To test out the implementation, it can run on using the CLI:
+1. Make sure you are using `Python3`.
+2. `tensorflow >= 2.0` requires `pip >= 19.0`. If your pip is older, run 
+   `pip install --upgrade pip`.
+3. The project requires the package 
+   [tensorflow-text](https://pypi.org/project/tensorflow-text/), which is not
+   available for windows yet. To run the project, use the provided docker image.
 
+When installed correctly, the project can be accessed directly from the command
+line. As an example, run the following commands in your terminal.
 ```shell script
-sts "Das ist ein Test" "Das ist ein weiterer Test"
+sts "This parrot is no more." "A tiger ... in Africa?"
 sts -f examples/absolute_eingabe.json
 ```
 
-### For Windows
+## Web Service
 
-This project relies on the python package `tensorflow-text`, which is not available
-under windows. To try the project out anyway, a Dockerfile was included, which
-lets you run the cli in a Docker Container.
+The project can be used as a REST webservice based on
+[fastapi](https://fastapi.tiangolo.com) which is served on the ASGI server 
+[uvicorn](http://www.uvicorn.org).
 
-To build the docker container and run it, type
-```shell script
-cd directory/with/the/Dockerfile
-docker build --tag sts-cli .
-docker run sts-cli "My first sentence." "My second sentence."
-``` 
-
-## Rasa Action Server
-
-The project provides an implementation of a 
-[custom rasa action](https://rasa.com/docs/rasa/core/actions/#custom-actions)
-which allows to use this project in a chatbot based on the
-[rasa framework](https://rasa.com).
-
-To install the requirements necessary to run the action server, run the
-following commands in your terminal.
+To install the requirements and run the server, run the following commands in
+your terminal.
 
 ```shell script
-pip install -e .[rasa]
-rasa run actions --actions actions.actions
+pip install -e .[server]
+sts-server
 ```
 
-This will start a server providing a webservice on 
-[localhost:5055](https://localhost:5055)
-which can then be tested with e.g. 
-[this rasa chatbot](https://github.com/fabianSorn/rasa_playground).
+The server offers a single endpoint `/compare`, which handles POST requests
+containing two sentences in the body. For learning more about the usage, run
+the `sts-server` and open 
+[http://localhost:8000/redocs](http://localhost:8000/redocs) in your browser.
+When called correctly, it will return the similarity percentage as a response.
+
+##Docker
+
+A Docker image is provided for running the server.
+To build the image, run the following commands in your terminal:
+
+```shell script
+docker build -t sts-server .
+```
+
+The built container can be started running the following commands in your
+terminal:
+
+```shell script
+docker run -p 8000:8000 sts-server
+```
+
+Then the webservice can be accessed at
+[http://localhost:8000](http://localhost:8000)
+
+# TODOs
+## Technical
+- **[DONE]** Create simple Docker Container for the Script so it can be used under Windows
+- **[DONE]** Download use-model and load it locally (had some caching errors)
+- **[OPEN]** Profile how long loading the model is taking. Maybe a solution for
+             keeping it in memory?
+## Research
+- **[IN PROGRESS]** Test results with sentence fraction without the obvious parts
 
 # Further, more general reading
 
@@ -131,15 +153,6 @@ way to put more stress on parts of the sentence we care about more than others
 (e.g. apply some kind of weight-system to individual words). One problem with
 such an approach would be, that it would require preparation of all reference
 data, which does not seem realistic.
-
-## TODOs
-### Technical
-- **[DONE]** Create simple Docker Container for the Script so it can be used under Windows
-- **[DONE]** Download use-model and load it locally (had some caching errors)
-- **[OPEN]** Profile how long loading the model is taking. Maybe a solution for
-             keeping it in memory?
-### Research
-- **[IN PROGRESS]** Test results with sentence fraction without the obvious parts
 
 ## References and Further Reading
 

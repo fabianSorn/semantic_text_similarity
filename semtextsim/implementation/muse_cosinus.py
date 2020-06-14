@@ -4,6 +4,9 @@ import logging
 LOGGER = logging.getLogger(__file__)
 
 import numpy as np
+# Silence tensorflow with this:
+# import os
+# os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 import tensorflow as tf
 
 import tensorflow_text; do_not_remove = tensorflow_text
