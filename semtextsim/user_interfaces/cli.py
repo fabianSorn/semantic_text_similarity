@@ -2,7 +2,7 @@ import argparse
 import json
 import sys
 import io
-from typing import List, Tuple, Optional
+from typing import List, Optional
 from textwrap import wrap
 from dataclasses import dataclass
 import numpy as np
@@ -12,7 +12,8 @@ try:
     WITH_PLOT = True
 except ImportError:
     WITH_PLOT = False
-from semtextsim.muse_cosinus import MuseEncoder, CosinusSimilarityEvaluator
+from semtextsim.implementation import inject
+from semtextsim.interface import Encoder, Comparer
 
 
 @dataclass
@@ -85,8 +86,8 @@ def _read_file(f: str) -> Definition:
 
 def main():
     args = _args()
-    encoder = MuseEncoder()
-    evaluator = CosinusSimilarityEvaluator()
+    encoder: Encoder = inject(Encoder)
+    comparer: Comparer = inject(Comparer)
     if args.file:
         definition = _read_file(args.file)
     elif isinstance(args.texts, io.TextIOWrapper):
@@ -97,9 +98,9 @@ def main():
         definition = Definition(question="",
                                 reference=args.texts.pop(0),
                                 answers=args.texts)
-    reference_embedding = encoder.extract_features(definition.reference)
-    answer_embeddings = encoder.extract_features(*definition.answers)
-    similarities = [evaluator.eval_pair(reference_embedding, a) for a in answer_embeddings]
+    reference_embedding = encoder.encode(definition.reference)
+    answer_embeddings = encoder.encode(*definition.answers)
+    similarities = [comparer.eval_pair(reference_embedding, a) for a in answer_embeddings]
     definition.answer_similarities = similarities
     present(definition)
 

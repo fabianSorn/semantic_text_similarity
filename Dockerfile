@@ -1,5 +1,4 @@
 FROM tensorflow/tensorflow
-ARG MODEL_URL="https://tfhub.dev/google/universal-sentence-encoder-multilingual-large/3?tf-hub-format=compressed"
 RUN mkdir home/application
 WORKDIR home/application
 
@@ -8,12 +7,13 @@ ADD semtextsim ./semtextsim
 ADD setup.cfg .
 ADD setup.py .
 
-# ADD does not seem to work properly for tensorflow models, so we do it by hand
-RUN curl --location --request GET $MODEL_URL --output model.tar.gz
-RUN mkdir model
-RUN tar -xzf model.tar.gz -C model
-RUN rm model.tar.gz
+# Download model so we do not have to rely on tensorflow_hub package
+ADD download_model.sh .
+RUN chmod a+x download_model.sh && ./download_model.sh && rm download_model.sh
 
 # Now install the project and define it as the entry point
-RUN pip install -e .
-ENTRYPOINT ["sts"]
+RUN pip install -e .[server]
+EXPOSE 8000
+
+# --host 0.0.0.0 -> listen on all network interfaces of the docker container
+CMD ["uvicorn", "semtextsim.user_interfaces.rest:app", "--host", "0.0.0.0", "--port", "8000"]

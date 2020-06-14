@@ -7,13 +7,12 @@ from setuptools import setup, find_packages
 # Not pinning tensorflow package versions might lead to incompatibilities
 requirements = ["tensorflow==2.2.0",
                 "tensorflow_text==2.2.0",
-                "tensorflow_hub==0.8.0",
                 "numpy",
                 "dataclasses; python_version<='3.6'"]
 
 extras_require = {
     "plot": ["matplotlib", "seaborn"],
-    "rasa": ["rasa", "rasa-sdk"],
+    "server": ["uvicorn", "fastapi"],
 }
 
 setup_requirements = ["pytest-runner", ]
@@ -38,7 +37,8 @@ setup(
     description="Some Project for testing the semantic similarity between two sentences.",
     entry_points={
         "console_scripts": [
-            "sts=semtextsim.cli:main",
+            "sts=semtextsim.user_interfaces.cli:main",
+            "sts-server=semtextsim.user_interfaces.rest:main",
         ],
     },
     install_requires=requirements,

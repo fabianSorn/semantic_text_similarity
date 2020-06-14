@@ -132,6 +132,15 @@ way to put more stress on parts of the sentence we care about more than others
 such an approach would be, that it would require preparation of all reference
 data, which does not seem realistic.
 
+## TODOs
+### Technical
+- **[DONE]** Create simple Docker Container for the Script so it can be used under Windows
+- **[DONE]** Download use-model and load it locally (had some caching errors)
+- **[OPEN]** Profile how long loading the model is taking. Maybe a solution for
+             keeping it in memory?
+### Research
+- **[IN PROGRESS]** Test results with sentence fraction without the obvious parts
+
 ## References and Further Reading
 
 Here I've listed some articles and projects that helped me get into the topic.

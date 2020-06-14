@@ -1,43 +1,39 @@
-from typing import Any
+from typing import Sequence
 from abc import ABC, abstractmethod
-import numpy as np
 
 
 class Encoder(ABC):
 
-    def __init__(self):
-        """Abstract Base Class defining the interface of a text encoder."""
-        pass
+    """Abstract Base Class defining the interface of a text encoder."""
 
     @abstractmethod
-    def extract_features(self, text: str) -> Any:
+    def encode(self, *texts: str) -> Sequence[Sequence[float]]:
         """
-        Extract Features from the given Text. This can be e.g. creating a
-        vector representation of them.
-
-        Args:
-            text: text, whose features should be extracted.
+        Encode the given texts.
 
         Returns:
-            Features of the passed text.
+            Vector representation of the given texts.
         """
         pass
 
 
-class SimilarityEvaluator:
+class Comparer(ABC):
 
-    def __init__(self):
-        """Abstract class defining the interface for comparing the semantics
-        of given texts."""
-        pass
+    """
+    Abstract class defining the interface for comparing the semantics
+    of given texts.
+    """
 
     @abstractmethod
-    def eval_pair(self, text_1: str, text_2: str) -> float:
+    def compare(self, t1: Sequence[float], t2: Sequence[float]) -> float:
         """Evaluate the similarity between the two given texts."""
         pass
 
     @abstractmethod
-    def eval(self, *texts: str) -> np.ndarray:
-        """Evaluate how semantically similar the given text pieces are."""
+    def compare_all(self, *texts: Sequence[float]) -> Sequence[Sequence[float]]:
+        """
+        Evaluate the similarity for each of the given texts with each other
+        and return their similarity scores in a 2D array.
+        """
         pass
 
