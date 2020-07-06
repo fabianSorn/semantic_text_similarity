@@ -1,6 +1,7 @@
-from typing import List
-from pathlib import Path
 import logging
+from pathlib import Path
+from typing import List
+
 LOGGER = logging.getLogger(__file__)
 
 import numpy as np
@@ -9,19 +10,20 @@ import numpy as np
 # os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 import tensorflow as tf
 
-import tensorflow_text; do_not_remove = tensorflow_text
+import tensorflow_text;
+
+do_not_remove = tensorflow_text
 """
 Not importing tensorflow_text before loading the universal sentence encoder 
 model leads to errors (even if it is not used in this module...)
 """
 
 from semtextsim.interface import Encoder as AbcEncoder
-from semtextsim.interface import Comparer as AbcComparer
 
 
 def model_location():
     import semtextsim
-    return str(Path(semtextsim.__file__).parent.parent.absolute() / "model")
+    return str(Path(semtextsim.__file__).parent.parent.absolute() / "model" / "bert")
 
 
 class Encoder(AbcEncoder):
@@ -47,19 +49,3 @@ class Encoder(AbcEncoder):
 
     def encode(self, *text: str) -> List[np.ndarray]:
         return [self._embed(t) for t in text]
-
-
-class Comparer(AbcComparer):
-
-    def compare_all(self, *texts: np.ndarray) -> np.ndarray:
-        results = []
-        for t1 in texts:
-            results.append([self.eval_pair(t1, t2) for t2 in texts])
-        return results
-
-    def compare(self, v1: np.ndarray, v2: np.ndarray) -> float:
-        mag1 = np.linalg.norm(v1)
-        mag2 = np.linalg.norm(v2)
-        if (not mag1) or (not mag2):
-            return 0
-        return np.dot(np.squeeze(np.asarray(v1)), np.squeeze(np.asarray(v2))) / (mag1 * mag2)

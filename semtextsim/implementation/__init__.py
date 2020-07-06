@@ -5,7 +5,8 @@ _logger = logging.getLogger(__name__)
 
 from semtextsim.interface import Encoder as AbcEncoder
 from semtextsim.interface import Comparer as AbcComparer
-from .muse_cosinus import Encoder, Comparer
+from .bert import Encoder
+from .cosinus import Comparer
 
 
 _providers: Dict[Type[ABC], Type] = {AbcEncoder: Encoder(),
