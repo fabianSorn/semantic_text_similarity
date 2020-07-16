@@ -1,5 +1,3 @@
-#!/bin/sh
-
 folder="model"
 archive="${folder}.tar.gz"
 
