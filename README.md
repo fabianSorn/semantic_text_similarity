@@ -3,30 +3,45 @@
 A tool for comparing the semantic similarity of two texts which can be accessed
 from the command line or as a webservice.
 
-## Installation and Usage
+## Installation and Usage without Docker
 
 To install the project via pip in your environment, run the following commands
 in your terminal.
 
+### Preparations (if you are not using docker)
+
+These preparations are mainly necessary for running the project without using
+docker.
+
+Optional: Create a local development environment.
 ```shell script
-# Create some envrironment to install it to
 python -m pip install virtualenv
 python -m venv .venv
 source .venv/bin/activate
-# Make shure pip is up to date (for tensorflow >= 2)
+```
+`tensorflow >= 2.0` requires `pip >= 19.0`. To make sure your package manager
+is up to date, run the following command.
+```shell script
 pip install --upgrade pip
-# If we install the plot dependencies, we will get a nicer representation of the
-# results from the cli
-pip install -e .[plot]
 ```
 
-**Attention:**
-1. Make sure you are using `Python3`.
-2. `tensorflow >= 2.0` requires `pip >= 19.0`. If your pip is older, run 
-   `pip install --upgrade pip`.
-3. The project requires the package 
-   [tensorflow-text](https://pypi.org/project/tensorflow-text/), which is not
-   available for windows yet. To run the project, use the provided docker image.
+*** The project requires the package
+[tensorflow-text](https://pypi.org/project/tensorflow-text/), which is not
+available for windows yet. To run the sproject, use the provided docker image. ***
+
+### Installation using pip
+
+```shell script
+pip install -e .[cli]
+```
+```shell script
+pip install -e .[server]
+```
+```shell script
+pip install -e .[all]
+```
+
+### Usage
 
 When installed correctly, the project can be accessed directly from the command
 line. As an example, run the following commands in your terminal.
@@ -51,11 +66,11 @@ sts-server
 
 The server offers a single endpoint `/compare`, which handles POST requests
 containing two sentences in the body. For learning more about the usage, run
-the `sts-server` and open 
+sthe `sts-server` and open 
 [http://localhost:8000/redocs](http://localhost:8000/redocs) in your browser.
 When called correctly, it will return the similarity percentage as a response.
 
-##Docker
+### Installation and Usage using Docker
 
 A Docker image is provided for running the server.
 To build the image, run the following commands in your terminal:
@@ -73,15 +88,6 @@ docker run -p 8000:8000 sts-server
 
 Then the webservice can be accessed at
 [http://localhost:8000](http://localhost:8000)
-
-# TODOs
-## Technical
-- **[DONE]** Create simple Docker Container for the Script so it can be used under Windows
-- **[DONE]** Download use-model and load it locally (had some caching errors)
-- **[OPEN]** Profile how long loading the model is taking. Maybe a solution for
-             keeping it in memory?
-## Research
-- **[IN PROGRESS]** Test results with sentence fraction without the obvious parts
 
 # Further, more general reading
 
