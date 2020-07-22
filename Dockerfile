@@ -9,7 +9,10 @@ ADD setup.py .
 
 # Download model so we do not have to rely on tensorflow_hub package
 ADD download_model.sh .
-RUN chmod a+x download_model.sh && ./download_model.sh && rm download_model.sh
+
+RUN chmod a+x download_model.sh
+RUN ./download_model.sh
+RUN rm download_model.sh
 
 # Now install the project and define it as the entry point
 RUN pip install -e .[server]
